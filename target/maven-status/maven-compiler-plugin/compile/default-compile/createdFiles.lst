@@ -1,0 +1,6 @@
+com\demo\manga\service\MangaClient.class
+com\demo\manga\service\MangaService.class
+com\demo\manga\controller\MangaController.class
+com\demo\manga\model\Manga.class
+com\demo\manga\service\MangaBonjour.class
+com\demo\manga\dao\MangaDAO.class
