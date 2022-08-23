@@ -25,7 +25,7 @@
 				<td align="center">${manga.releaseStatus}</td>
 				<%-- <td><a
 					href="<%=request.getContextPath()%>/MangaController?flag=modificaManga&mangaSeriesID=${manga.mangaSeriesID}">modifica</a></td> --%>
-				<td align="right"><a
+				<td align="center"><a
 					href="<%=request.getContextPath()%>/MangaController?flag=eliminaManga&mangaSeriesID=${manga.mangaSeriesID}">elimina</a></td>
 			</tr>
 		</c:forEach>

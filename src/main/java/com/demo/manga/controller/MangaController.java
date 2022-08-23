@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.demo.manga.dao.MangaDAO;
 import com.demo.manga.model.Manga;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 /**
@@ -25,7 +26,10 @@ public class MangaController extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOGGER = Logger.getLogger(MangaController.class);
+	@SuppressWarnings("unused")
+//	private static final Logger LOGGER = Logger.getLogger(MangaController.class);
+	
+	private static Logger logger = LogManager.getLogger(MangaController.class); 
 
 	public MangaController() {
 		super();
@@ -52,7 +56,7 @@ public class MangaController extends HttpServlet {
 		if ("eliminaManga".equalsIgnoreCase(flag)) {
 			String mangaSeriesID = request.getParameter("mangaSeriesID");
 			if (mangaSeriesID != "") {
-				mangaDAO.deleteMangaByID(Integer.valueOf(mangaSeriesID));
+				MangaDAO.deleteMangaByID(Integer.valueOf(mangaSeriesID));
 			}
 			List<Manga> mangas = MangaDAO.findAllManga();
 			request.setAttribute("mangas", mangas);
@@ -86,7 +90,7 @@ public class MangaController extends HttpServlet {
 			manga.setMangaSeriesID(Integer.valueOf(mangaSeriesID));
 		}
 
-		mangaDAO.createMangaRecord(manga);
+		MangaDAO.createMangaRecord(manga);
 
 		handleRequestUsingFlag(request, response, "mostraManga");
 

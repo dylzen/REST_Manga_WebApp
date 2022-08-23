@@ -14,10 +14,7 @@
     <servlet-name>REST WebApp</servlet-name>
     <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
-  <persistence-context-ref>
-    <persistence-context-ref-name>persistence/em</persistence-context-ref-name>
-    <persistence-unit-name>libreria</persistence-unit-name>
-  </persistence-context-ref>
+ 
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>

@@ -7,20 +7,8 @@ import javax.persistence.*;
 import com.demo.manga.model.Manga;
 
 public class MangaDAO {
-
-//	@SuppressWarnings("deprecation")
-//	public void addManga(Manga manga) {
-//
-//		SessionFactory sessionFactory = MangaUtil.getSessionFactory();
-//		Session session = sessionFactory.openSession();
-//		Transaction transaction = session.beginTransaction();
-//		session.saveOrUpdate(manga);
-//		transaction.commit();
-//		session.close();
-//
-//	}
 	
-	public void createMangaRecord(Manga manga) {
+	public static void createMangaRecord(Manga manga) {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("libreria");
 		EntityManager entityManager = emf.createEntityManager();
 		entityManager.getTransaction().begin();
@@ -37,12 +25,6 @@ public class MangaDAO {
 
 		entityManager.getTransaction().commit();
 	}
-
-//	public List<Manga> findAllManga() {
-//		SessionFactory sessionFactory = MangaUtil.getSessionFactory();
-//		Session session = sessionFactory.openSession();
-//		return session.createQuery("from Manga", Manga.class).getResultList();
-//	}
 	
 	public static List<Manga> findAllManga() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("libreria");
@@ -51,15 +33,8 @@ public class MangaDAO {
 		
 		return entityManager.createQuery("from Manga", Manga.class).getResultList();
 	}
-//
-//	public Manga findMangaByMangaID(int mangaSeriesID) {
-//		SessionFactory sessionFactory = MangaUtil.getSessionFactory();
-//		Session session = sessionFactory.openSession();
-//		return session.find(Manga.class, mangaSeriesID);
-//
-//	}
 	
-	public Manga findMangaByMangaID(int mangaSeriesID) {
+	public static Manga findMangaByMangaID(int mangaSeriesID) {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("libreria");
 		EntityManager entityManager = emf.createEntityManager();
 		entityManager.getTransaction().begin();
@@ -71,25 +46,35 @@ public class MangaDAO {
 		entityManager.getTransaction().commit();
 		return retrievedManga;
 	}
-//
-//	public void deleteMAngaById(int mangaSeriesID) {
-//		Manga manga = findMangaByMangaID(mangaSeriesID);
-//		SessionFactory sessionFactory = MangaUtil.getSessionFactory();
-//		Session session = sessionFactory.openSession();
-//		Transaction transaction = session.beginTransaction();
-//		session.delete(manga);
-//		transaction.commit();
-//		session.close();
-//
-//	}
-	public void deleteMangaByID(int mangaSeriesID) {
+	
+	public static Manga updateMangaByID(Manga manga) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("libreria");
+		EntityManager entityManager = emf.createEntityManager();
+
+		entityManager.getTransaction().begin();
+		
+		Manga toUpdateManga = entityManager.find(Manga.class, manga.getMangaSeriesID());
+		
+		toUpdateManga.setTitle(manga.getTitle());
+		toUpdateManga.setAuthor(manga.getAuthor());
+		toUpdateManga.setPrice(manga.getPrice());
+		toUpdateManga.setVolumes(manga.getVolumes());
+		toUpdateManga.setReleaseStatus(manga.getReleaseStatus());
+//		toUpdateManga.setPrice(99);
+		entityManager.persist(toUpdateManga);
+
+		entityManager.getTransaction().commit();
+		return toUpdateManga;
+	}
+
+	public static void deleteMangaByID(int mangaSeriesID) {
 
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("libreria");
 		EntityManager entityManager = emf.createEntityManager();
 		entityManager.getTransaction().begin();
 	
-		Manga toBeDeletedManga = entityManager.find(Manga.class, mangaSeriesID);
-		entityManager.remove(toBeDeletedManga); // cancella dal DB
+		Manga toDeleteManga = entityManager.find(Manga.class, mangaSeriesID);
+		entityManager.remove(toDeleteManga); // cancella dal DB
 
 		entityManager.getTransaction().commit();
 
